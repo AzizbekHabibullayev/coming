@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coming Someday</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
+        
+        :root {
+            --bg-primary: #0A0A0A;
+            --bg-secondary: #141414;
+            --text-primary: #FFFFFF;
+            --text-secondary: #CCCCCC;
+            --accent-gold: #0A84FF;
+            --accent-blue: #4A90E2;
+            --highlight: #E0E0E0;
+            --gradient-gold: linear-gradient(135deg, var(--accent-gold) 0%, #0080ff 100%);
+            --gradient-dark: linear-gradient(180deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
+            --card-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: var(--gradient-dark);
+            color: var(--text-primary);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 0 50px;
+            line-height: 1.6;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        /* Animated background elements */
+        .animated-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: -2;
+            overflow: hidden;
+        }
+        
+        .bg-gradient {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: var(--gradient-dark);
+        }
+        
+        .particles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+        
+        .particle {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(10, 132, 255, 0.15);
+            animation: float var(--duration) ease-in-out infinite alternate;
+            opacity: var(--opacity);
+        }
+        
+        @keyframes float {
+            0% {
+                transform: translate(0, 0) rotate(0deg) scale(1);
+            }
+            100% {
+                transform: translate(var(--distance), var(--distance)) rotate(var(--rotation)) scale(var(--scale));
+            }
+        }
+        
+        .glow-orb {
+            position: absolute;
+            border-radius: 50%;
+            background: var(--accent-gold);
+            filter: blur(80px);
+            opacity: 0.2;
+            animation: pulse 15s ease-in-out infinite alternate;
+        }
+        
+        @keyframes pulse {
+            0% {
+                transform: scale(1) translate(0, 0);
+                opacity: 0.1;
+            }
+            50% {
+                transform: scale(1.2) translate(var(--move-x), var(--move-y));
+                opacity: 0.2;
+            }
+            100% {
+                transform: scale(1) translate(calc(var(--move-x) * -1), calc(var(--move-y) * -1));
+                opacity: 0.15;
+            }
+        }
+        
+        .wave {
+            position: absolute;
+            width: 150%;
+            height: 150%;
+            background: linear-gradient(45deg, transparent 40%, rgba(10, 132, 255, 0.04) 50%, transparent 60%);
+            transform-origin: center;
+            animation: rotate var(--duration) linear infinite;
+        }
+        
+        @keyframes rotate {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+        
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 20% 30%, rgba(10, 132, 255, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(10, 132, 255, 0.1) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: -1;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .main-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 80vh;
+            padding: 20px 0;
+        }
+        
+        h1 {
+            font-size: 5rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            padding-bottom: 10px;
+            text-align: center;
+            background: linear-gradient(to right, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0.7) 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: -0.02em;
+            line-height: 1.1;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+        
+        .subtitle {
+            font-size: 1.5rem;
+            color: rgba(255, 255, 255, 0.7);
+            text-align: center;
+            max-width: 600px;
+            margin: 0 auto 2rem;
+            font-weight: 400;
+            line-height: 1.4;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif, italic;
+        }
+        
+        .footer {
+            padding: 2rem 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            margin-top: auto;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .footer-content {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 2rem;
+        }
+        
+        .social-link {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+            position: relative;
+            padding: 8px 16px;
+            border-radius: 8px;
+        }
+        
+        .social-link:hover {
+            color: var(--accent-gold);
+            background: rgba(10, 132, 255, 0.1);
+        }
+        
+        .social-link i {
+            font-size: 1.25rem;
+            color: var(--accent-gold);
+        }
+        
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 3.5rem;
+            }
+            
+            .subtitle {
+                font-size: 1.25rem;
+            }
+            
+            body {
+                padding: 0 30px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 2.5rem;
+            }
+            
+            .subtitle {
+                font-size: 1rem;
+            }
+            
+            body {
+                padding: 0 20px;
+            }
+            
+            .footer-content {
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="animated-bg">
+        <div class="bg-gradient"></div>
+        
+        <div class="particles">
+            <!-- Particles will be generated by JavaScript -->
+        </div>
+        
+        <div class="glow-orb" style="width: 400px; height: 400px; top: -200px; left: -100px; --move-x: 50px; --move-y: 80px;"></div>
+        <div class="glow-orb" style="width: 350px; height: 350px; bottom: -150px; right: -100px; --move-x: -70px; --move-y: -50px;"></div>
+        <div class="glow-orb" style="width: 250px; height: 250px; top: 40%; left: 60%; --move-x: 80px; --move-y: -60px;"></div>
+        
+        <div class="wave" style="--duration: 80s;"></div>
+        <div class="wave" style="--duration: 50s; opacity: 0.5; transform: rotate(30deg);"></div>
+    </div>
+    
+    <div class="container">
+        <main class="main-content">
+            <p class="subtitle">A dope shit</p>
+            <h1>Coming Someday</h1>
+        </main>
+        
+        <footer class="footer">
+            <div class="footer-content">
+                <a href="https://youtube.com/@azeezbek" class="social-link" target="_blank">
+                    <i class="fab fa-youtube"></i>
+                    <span>YouTube</span>
+                </a>
+                <a href="http://www.instagram.com/azeezbek.me" class="social-link" target="_blank">
+                    <i class="fab fa-instagram"></i>
+                    <span>Instagram</span>
+                </a>
+                <a href="https://t.me/azeezbekme" class="social-link" target="_blank">
+                    <i class="fab fa-telegram"></i>
+                    <span>Telegram</span>
+                </a>
+            </div>
+        </footer>
+    </div>
+</body>
+</html>
